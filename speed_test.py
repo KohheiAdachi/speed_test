@@ -65,18 +65,6 @@ def load_sheet(date_today):
     worksheet = gfile.worksheet(date_today)
     return worksheet
 
-# 空の行のセルを探す
-def check_cell(worksheet):
-    i = 1
-    while(1):
-        val = worksheet.cell(i, 1).value
-        if val!="":
-            i += 1
-            print(i)
-            break
-        i += 1
-    return i
-
 # 日付のWorksheetがなけらば作成する．あればロードする
 def create_or_load_worksheet(date_today):
     try:
@@ -92,14 +80,11 @@ def upload_network_status_data():
     date_today = str(datetime.date.today())
     worksheet = create_or_load_worksheet(date_today)
     now_time = datetime.datetime.now().strftime("%H:%M:%S")
-    # check_cell_num = check_cell(worksheet)
+
     column_list = get_network_status_data()
     column_list.insert(0,now_time)
     # column_list = [11,22,33,44]
     worksheet.append_row(column_list)
-    # for i,column in enumerate(column_list):
-    #     worksheet.update_cell(check_cell_num,i+1,column)
-
 
 if __name__ == "__main__":
     # selecting_data()
