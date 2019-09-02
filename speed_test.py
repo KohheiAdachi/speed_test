@@ -3,7 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from httplib2 import Http
 import gspread
 import datetime
-
+from setting import setting
 
 def speedtest_results():
     servers = []
@@ -42,12 +42,12 @@ def get_network_status_data():
 
 def load_spread_sheet():
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    json_file = 'raspi-56a886c9c4f1.json'  # OAuth用クライアントIDの作成でダウンロードしたjsonファイル
+    json_file = setting["json_file"]  # OAuth用クライアントIDの作成でダウンロードしたjsonファイル
     credentials = ServiceAccountCredentials.from_json_keyfile_name(json_file, scopes=scopes)
     http_auth = credentials.authorize(Http())
 
     # スプレッドシート用クライアントの準備
-    doc_id = '1n6MuYkKRViTPGUJQX9V4GIFXZo5j1EvQkYXNqNL3nFM'  # これはスプレッドシートのURLのうちhttps://docs.google.com/spreadsheets/d/以下の部分です
+    doc_id = setting["doc_id"]  # これはスプレッドシートのURLのうちhttps://docs.google.com/spreadsheets/d/以下の部分です
     client = gspread.authorize(credentials)
     gfile = client.open_by_key(doc_id)  # 読み書きするgoogle spreadsheet
     return gfile
